@@ -40,12 +40,22 @@ export const verifyUser = async (
     const verifyRole = await guild.roles.fetch(
       process.env.VERIFIED_ROLE || "oh no!"
     );
+    const newcomerRole = await guild.roles.fetch(
+      process.env.TE_NEWCOMER_ROLE || "oh no!"
+    );
 
     if (!verifyRole) {
       logHandler.log("error", "Could not locate verified role!");
       return;
     }
     await user.roles.add(verifyRole);
+
+    if (!newcomerRole) {
+      logHandler.log("error", "Could not locate verified role!");
+      return;
+    }
+    await user.roles.add(newcomerRole);
+
     await sendLogMessage(`${user.user.tag} was verified!`);
   } catch (e) {
     const err = e as Error;

@@ -22,11 +22,14 @@
  */
 
 import {
+  GuildMember,
   Message,
   MessageActionRow,
   MessageButton,
   MessageEmbed,
+  ReactionUserManager,
 } from "discord.js";
+import { guildMemberAdd } from "./guildMemberAdd";
 
 /**
  * Handles the message create event. Essentially used just to send the
@@ -40,9 +43,9 @@ export const onMessage = async (message: Message): Promise<void> => {
     message.author.id === "558192816308617227"
   ) {
     const embed = new MessageEmbed();
-    embed.setTitle("Welcome to the TEC!");
+    embed.setTitle("Welcome to TE Academy!");
     embed.setDescription(
-      "We’re glad you are here!\n\nBefore we can let you in, we need to know you are a human and not a bot. All you need to do in answer one simple question but beware because answering wrong will get you kicked from the server!\nClick the button below to get started.\nIf you get stuck, DM <@!558192816308617227>."
+      "We’re glad that you are here!\nBefore letting you in, we need to know you are a human and not a bot. :) All you need to do is answer one simple question, but beware!\nAnswering wrong will get you kicked from the server! Click the button below to get started\nIf you get stuck, DM <@!902543185367142400>."
     );
 
     const button = new MessageButton()
@@ -60,63 +63,76 @@ export const onMessage = async (message: Message): Promise<void> => {
     message.author.id === "558192816308617227"
   ) {
     const embed = new MessageEmbed();
-    embed.setTitle("Welcome to the TEC!");
+    embed.setTitle("Hello - welcome to the our community!");
     embed.setDescription(
-      "Hello there! This channel provides a general overview about the TEC, click on the buttons below to start your journey into our community."
+      "What are you most interested in? Please click on the buttons below to start your journey at TE Academy."
     );
 
-    const aboutButton = new MessageButton()
-      .setCustomId("about")
-      .setLabel("What is the TEC?")
+    const whatIsTeButton = new MessageButton()
+      .setCustomId("what-is-te")
+      .setLabel("What is Token Engineering?")
       .setStyle("PRIMARY");
 
-    const wgButton = new MessageButton()
-      .setCustomId("wg")
-      .setLabel("How is the TEC organised?")
+    const whatIsTEAButton = new MessageButton()
+      .setCustomId("what-is-tea")
+      .setLabel("What is the Token Engineering Academy?")
       .setStyle("PRIMARY");
 
-    /*
     const discordButton = new MessageButton()
-      .setCustomId("discord-channels")
-      .setLabel("How to use the Discord?")
-      .setStyle("PRIMARY");
-    */
-
-    const acquireTECButton = new MessageButton()
-      .setCustomId("acquire-tec")
-      .setLabel("How to acquire TEC tokens?")
-      .setStyle("SUCCESS");
-
-    const proposalButton = new MessageButton()
-      .setCustomId("proposal")
-      .setLabel("How to make a proposal?")
+      .setCustomId("discord-structure")
+      .setLabel("How is this Discord organized? Where to go next?")
       .setStyle("PRIMARY");
 
-    const praiseButton = new MessageButton()
-      .setCustomId("praise")
-      .setLabel("What is Praise?")
+    const howToTEButton = new MessageButton()
+      .setCustomId("how-to-te")
+      .setLabel("I'd like to study! How can I become a Token Engineer?")
       .setStyle("PRIMARY");
 
-    const contributeButton = new MessageButton()
-      .setCustomId("contribute")
-      .setLabel("I want to contribute to the TEC!")
-      .setStyle("SUCCESS");
+    const supportButton = new MessageButton()
+      .setCustomId("te-support")
+      .setLabel("Our project needs Token Engineering support.")
+      .setStyle("PRIMARY");
+
+    const guidelineButton = new MessageButton()
+      .setCustomId("guidelines")
+      .setLabel("What are the TE Community Guidelines.")
+      .setStyle("PRIMARY");
 
     const buttonsA = new MessageActionRow().addComponents(
-      aboutButton,
-      wgButton,
-      praiseButton,
-      proposalButton
+      whatIsTeButton,
+      whatIsTEAButton,
+      discordButton
     );
 
     const buttonsB = new MessageActionRow().addComponents(
-      contributeButton,
-      acquireTECButton
+      howToTEButton,
+      supportButton,
+      guidelineButton
     );
     await message.channel.send({
       embeds: [embed],
       components: [buttonsA, buttonsB],
     });
     await message.delete();
+  }
+  if (
+    message.content === "~migrate_roles" &&
+    message.author.id === "558192816308617227"
+  ) {
+    const guildMembers = await message.guild?.members.fetch();
+    if (!message.guild || !guildMembers) return;
+    const verifyRole = await message.guild.roles.fetch(
+      process.env.VERIFIED_ROLE || "oh no!"
+    );
+
+    if (!verifyRole) {
+      return;
+    }
+    for (const id of guildMembers) {
+      const member = await message.guild.members.fetch(id[0]);
+      if (member.roles.cache.find((r) => r.id === "788600331553472535")) {
+        await member.roles.add(verifyRole);
+      }
+    }
   }
 };

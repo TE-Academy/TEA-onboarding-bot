@@ -7,9 +7,6 @@
  *
  *
  * This program is free software: you can redistribute it and/or modify
-There are two ways to make an impact: One is to contribute your talent and time. The other is by acquiring $TEC, which allows you to help steer the TEC while directly supporting its mission( https://token-engineering-commons.gitbook.io/tec-handbook/what-is-the-tec/mission-vision-and-values). Here's how.
-https://token-engineering-commons.gitbook.io/tec-handbook/how-to-purchase-usdtec.
-
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -26,12 +23,14 @@ https://token-engineering-commons.gitbook.io/tec-handbook/how-to-purchase-usdtec
 
 import { Interaction } from "discord.js";
 
-import { aboutMenu } from "../modules/guide/aboutMenu";
-import { contributeMenu } from "../modules/guide/contributeMenu";
-import { organisationMenu } from "../modules/guide/organisationMenu";
-import { praiseMenu } from "../modules/guide/praiseMenu";
-import { proposalsMenu } from "../modules/guide/proposalsMenu";
-import { acquireTECMenu } from "../modules/guide/acquireTECMenu";
+import {
+  howToTE,
+  howToDiscord,
+  whatIsTEA,
+  whatIsTe,
+  support,
+  guidelines,
+} from "../modules/guide";
 import { question } from "../modules/verification/question";
 import { logHandler } from "../utils/logHandler";
 
@@ -50,29 +49,29 @@ export const interactionCreate = async (
           await interaction.deferReply({ ephemeral: true });
           await question(interaction);
           break;
-        case "about":
+        case "what-is-te":
           await interaction.deferReply({ ephemeral: true });
-          await aboutMenu(interaction);
+          await whatIsTe(interaction);
           break;
-        case "wg":
+        case "what-is-tea":
           await interaction.deferReply({ ephemeral: true });
-          await organisationMenu(interaction);
+          await whatIsTEA(interaction);
           break;
-        case "praise":
+        case "discord-structure":
           await interaction.deferReply({ ephemeral: true });
-          await praiseMenu(interaction);
+          await howToDiscord(interaction);
           break;
-        case "proposal":
+        case "how-to-te":
           await interaction.deferReply({ ephemeral: true });
-          await proposalsMenu(interaction);
+          await howToTE(interaction);
           break;
-        case "contribute":
+        case "te-support":
           await interaction.deferReply({ ephemeral: true });
-          await contributeMenu(interaction);
+          await support(interaction);
           break;
-        case "acquire-tec":
+        case "guidelines":
           await interaction.deferReply({ ephemeral: true });
-          await acquireTECMenu(interaction);
+          await guidelines(interaction);
           break;
         /*
         case "time":
