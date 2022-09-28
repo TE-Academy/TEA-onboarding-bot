@@ -63,9 +63,9 @@ export const onMessage = async (message: Message): Promise<void> => {
     message.author.id === "558192816308617227"
   ) {
     const embed = new MessageEmbed();
-    embed.setTitle("Hello - welcome to the our community!");
+    embed.setTitle("Hello - welcome to our community!");
     embed.setDescription(
-      "What are you most interested in? Please click on the buttons below to start your journey at TE Academy."
+      "Hello - welcome to our community! What are you most interested in? Please click on the buttons below to start your journey at TE Academy."
     );
 
     const whatIsTeButton = new MessageButton()
@@ -81,6 +81,11 @@ export const onMessage = async (message: Message): Promise<void> => {
     const discordButton = new MessageButton()
       .setCustomId("discord-structure")
       .setLabel("How is this Discord organized? Where to go next?")
+      .setStyle("PRIMARY");
+
+    const whatIsTeFundamentalsButton = new MessageButton()
+      .setCustomId("what-is-te-fundamentals")
+      .setLabel("What is TE Fundamentals?")
       .setStyle("PRIMARY");
 
     const howToTEButton = new MessageButton()
@@ -101,7 +106,8 @@ export const onMessage = async (message: Message): Promise<void> => {
     const buttonsA = new MessageActionRow().addComponents(
       whatIsTeButton,
       whatIsTEAButton,
-      discordButton
+      discordButton,
+      whatIsTeFundamentalsButton
     );
 
     const buttonsB = new MessageActionRow().addComponents(

@@ -99,12 +99,12 @@ export const question = async (
           const button = new MessageButton()
             .setLabel("Check out the Server Guide")
             .setURL(
-              "https://discord.com/channels/701149241107808327/968479153559044116/968492597549105214"
+              "https://discord.com/channels/1016433241978314913/1016433242628431934/1016573310462591028"
             )
             .setStyle("LINK");
           await collected.reply({
             content:
-              "For more info about the TE community, check out the <#968479153559044116> channel",
+              "For more info about the TE community, check out the <#1016433242628431934> channel",
             components: [new MessageActionRow().addComponents(button)],
             ephemeral: true,
           });

@@ -30,6 +30,7 @@ import {
   whatIsTe,
   support,
   guidelines,
+  whatIsTeFundamentals
 } from "../modules/guide";
 import { question } from "../modules/verification/question";
 import { logHandler } from "../utils/logHandler";
@@ -73,6 +74,10 @@ export const interactionCreate = async (
           await interaction.deferReply({ ephemeral: true });
           await guidelines(interaction);
           break;
+	case "what-is-te-fundamentals":
+	  await interaction.deferReply({ ephemeral: true });
+	  await whatIsTeFundamentals(interaction);
+	  break;
         /*
         case "time":
           await interaction.deferReply({ ephemeral: true });
