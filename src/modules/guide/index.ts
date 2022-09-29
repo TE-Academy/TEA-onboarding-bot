@@ -1,4 +1,4 @@
-import { ButtonInteraction, Message, MessageEmbed } from "discord.js";
+import { ButtonInteraction, Message, EmbedBuilder } from "discord.js";
 import * as fs from "fs";
 
 import { logHandler } from "../../utils/logHandler";
@@ -66,7 +66,7 @@ export const howToDiscord = async (
  *
  * @param {ButtonInteraction} interaction The command interaction.
  */
-export const whatIsTeFundamentals= async (
+export const whatIsTeFundamentals = async (
   interaction: ButtonInteraction
 ): Promise<void> => {
   try {
@@ -127,9 +127,11 @@ export const guidelines = async (
   interaction: ButtonInteraction
 ): Promise<void> => {
   try {
-    const guidelineEmbed = new MessageEmbed()
+    const guidelineEmbed = new EmbedBuilder()
       .setTitle("Discord Community Guidelines")
-      .setDescription("**Welcome to the TE Academy Community!**\nTE Academy is a community to learn, and contribute to the development of the discipline token engineering. Let's make this server a safe, empowering and pleasant place for everyone.")
+      .setDescription(
+        "**Welcome to the TE Academy Community!**\nTE Academy is a community to learn, and contribute to the development of the discipline token engineering. Let's make this server a safe, empowering and pleasant place for everyone."
+      )
       .setColor("#000")
       .addFields([
         {
@@ -147,15 +149,16 @@ export const guidelines = async (
           value:
             "- Be active, contribute to discussions, study groups and other activities.\n- Stimulate debate, raise relevant questions.\n- We value cross-disciplinary work. Help others to look through the lense of your discipline.\n- Give credit for good ideas and good effort.",
         },
-	{	
+        {
           name: "We respect privacy and user agency",
           value:
             "- We'll inform you if we record a session.\n- If you want to record a study group session, or any other session, please turn to your (study group) host for more information.\n- Please do not record sessions without informing the (study group) host in advance.\n- Always ask session attendees for permission.\n- Keep in mind that unauthorized recordings are not approved from TE Academy and we do not take any responsibility for the existence of those.",
         },
-	{
-	  name: "Unacceptable Behavior & Harassment",
-	  value: "- We do not condone any speech that is discriminatory, racist, abusive or in general disrespectful.\n- Participants who don't respect these rules, will be banned from the server.\n- The purpose of this server is not self promotion, promotion of other services or any other kind of promotion.\n- Do not promote any brands, sponsorships, logos or commercials that are not in advance agreed with TE Academy.\n- It is not allowed to sell products or tokens.\n- Spaming is not allowed.\n- Behaviour that is prohibited in this code of conduct stands on top of the Community Guidelines of Discord. That means that any violations that are against this TE Academy Community Guidelines will be dealt in accordance with Discord Community Guidelines. You can read more about the Guidelines here: <https://discord.com/guidelines>",
-	},
+        {
+          name: "Unacceptable Behavior & Harassment",
+          value:
+            "- We do not condone any speech that is discriminatory, racist, abusive or in general disrespectful.\n- Participants who don't respect these rules, will be banned from the server.\n- The purpose of this server is not self promotion, promotion of other services or any other kind of promotion.\n- Do not promote any brands, sponsorships, logos or commercials that are not in advance agreed with TE Academy.\n- It is not allowed to sell products or tokens.\n- Spaming is not allowed.\n- Behaviour that is prohibited in this code of conduct stands on top of the Community Guidelines of Discord. That means that any violations that are against this TE Academy Community Guidelines will be dealt in accordance with Discord Community Guidelines. You can read more about the Guidelines here: <https://discord.com/guidelines>",
+        },
         {
           name: "\u200b",
           value:
@@ -168,4 +171,3 @@ export const guidelines = async (
     logHandler.log("error", `${err.message}\n${err.stack}`);
   }
 };
-

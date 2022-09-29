@@ -22,31 +22,38 @@
  */
 
 import { Client } from "discord.js";
-
-import { guildMemberAdd } from "./events/guildMemberAdd";
-import { interactionCreate } from "./events/interactionCreate";
-import { onMessage } from "./events/message";
-import { ready } from "./events/ready";
+import { Bot } from "./interfaces/Bot";
 import { logHandler } from "./utils/logHandler";
+import { GatewayIntentBits } from "discord.js";
 
+import { loadCommands } from "./utils/loadCommands";
+import { registerCommands } from "./utils/registerCommands";
+import { validateEnv } from "./utils/validateEnv";
+import { handleEvents } from "./events";
 (async () => {
   try {
     const bot = new Client({
-      intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"],
-    });
+      intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+      ],
+    }) as Bot;
+    bot.envConfigs = validateEnv();
+    bot.commands = await loadCommands();
 
-    await bot.login(process.env.TOKEN || "oh no");
+    handleEvents(bot);
 
-    bot.on("ready", async () => await ready());
+    await bot.login(bot.envConfigs.token);
 
-    bot.on("guildMemberAdd", async (member) => await guildMemberAdd(member));
+    const registerSuccess = await registerCommands(bot);
 
-    bot.on(
-      "interactionCreate",
-      async (interaction) => await interactionCreate(interaction)
-    );
-
-    bot.on("messageCreate", async (message) => await onMessage(message));
+    if (registerSuccess) {
+      logHandler.log("info", "Bot commands registered successfully!");
+    } else {
+      logHandler.log("error", "Failed to register bot commands.");
+    }
   } catch (e) {
     const err = e as Error;
     logHandler.log("error", `${err.message}\n${err.stack}`);

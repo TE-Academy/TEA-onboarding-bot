@@ -22,12 +22,11 @@
  */
 
 import {
-  GuildMember,
   Message,
-  MessageActionRow,
-  MessageButton,
-  MessageEmbed,
-  ReactionUserManager,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder,
 } from "discord.js";
 import { guildMemberAdd } from "./guildMemberAdd";
 
@@ -42,18 +41,18 @@ export const onMessage = async (message: Message): Promise<void> => {
     message.content === "~init" &&
     message.author.id === "558192816308617227"
   ) {
-    const embed = new MessageEmbed();
+    const embed = new EmbedBuilder();
     embed.setTitle("Welcome to TE Academy!");
     embed.setDescription(
       "We’re glad that you are here!\nBefore letting you in, we need to know you are a human and not a bot. :) All you need to do is answer one simple question, but beware!\nAnswering wrong will get you kicked from the server! Click the button below to get started\nIf you get stuck, DM <@!902543185367142400>."
     );
 
-    const button = new MessageButton()
+    const button = new ButtonBuilder()
       .setLabel("Click here to verify!")
       .setEmoji("✅")
       .setCustomId("verify")
-      .setStyle("SUCCESS");
-    const row = new MessageActionRow().addComponents(button);
+      .setStyle(ButtonStyle.Success);
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
 
     await message.channel.send({ embeds: [embed], components: [row] });
     await message.delete();
@@ -62,55 +61,55 @@ export const onMessage = async (message: Message): Promise<void> => {
     message.content === "~journey-setup" &&
     message.author.id === "558192816308617227"
   ) {
-    const embed = new MessageEmbed();
+    const embed = new EmbedBuilder();
     embed.setTitle("Hello - welcome to our community!");
     embed.setDescription(
       "Hello - welcome to our community! What are you most interested in? Please click on the buttons below to start your journey at TE Academy."
     );
 
-    const whatIsTeButton = new MessageButton()
+    const whatIsTeButton = new ButtonBuilder()
       .setCustomId("what-is-te")
       .setLabel("What is Token Engineering?")
-      .setStyle("PRIMARY");
+      .setStyle(ButtonStyle.Primary);
 
-    const whatIsTEAButton = new MessageButton()
+    const whatIsTEAButton = new ButtonBuilder()
       .setCustomId("what-is-tea")
       .setLabel("What is the Token Engineering Academy?")
-      .setStyle("PRIMARY");
+      .setStyle(ButtonStyle.Primary);
 
-    const discordButton = new MessageButton()
+    const discordButton = new ButtonBuilder()
       .setCustomId("discord-structure")
       .setLabel("How is this Discord organized? Where to go next?")
-      .setStyle("PRIMARY");
+      .setStyle(ButtonStyle.Primary);
 
-    const whatIsTeFundamentalsButton = new MessageButton()
+    const whatIsTeFundamentalsButton = new ButtonBuilder()
       .setCustomId("what-is-te-fundamentals")
       .setLabel("What is TE Fundamentals?")
-      .setStyle("PRIMARY");
+      .setStyle(ButtonStyle.Primary);
 
-    const howToTEButton = new MessageButton()
+    const howToTEButton = new ButtonBuilder()
       .setCustomId("how-to-te")
       .setLabel("I'd like to study! How can I become a Token Engineer?")
-      .setStyle("PRIMARY");
+      .setStyle(ButtonStyle.Primary);
 
-    const supportButton = new MessageButton()
+    const supportButton = new ButtonBuilder()
       .setCustomId("te-support")
       .setLabel("Our project needs Token Engineering support.")
-      .setStyle("PRIMARY");
+      .setStyle(ButtonStyle.Primary);
 
-    const guidelineButton = new MessageButton()
+    const guidelineButton = new ButtonBuilder()
       .setCustomId("guidelines")
       .setLabel("What are the TE Community Guidelines.")
-      .setStyle("PRIMARY");
+      .setStyle(ButtonStyle.Primary);
 
-    const buttonsA = new MessageActionRow().addComponents(
+    const buttonsA = new ActionRowBuilder<ButtonBuilder>().addComponents(
       whatIsTeButton,
       whatIsTEAButton,
       discordButton,
       whatIsTeFundamentalsButton
     );
 
-    const buttonsB = new MessageActionRow().addComponents(
+    const buttonsB = new ActionRowBuilder<ButtonBuilder>().addComponents(
       howToTEButton,
       supportButton,
       guidelineButton

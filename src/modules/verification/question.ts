@@ -27,9 +27,10 @@ import {
   Guild,
   GuildMember,
   Message,
-  MessageButton,
-  MessageActionRow,
-  MessageSelectMenu,
+  ButtonBuilder,
+  ActionRowBuilder,
+  SelectMenuBuilder,
+  ButtonStyle,
 } from "discord.js";
 
 import { logHandler } from "../../utils/logHandler";
@@ -51,7 +52,7 @@ export const question = async (
       return;
     }
     const member = interaction.member as GuildMember;
-    const question = new MessageSelectMenu()
+    const question = new SelectMenuBuilder()
       .setCustomId("channel-name")
       .setPlaceholder("Are you a bot?")
       .addOptions([
@@ -67,7 +68,9 @@ export const question = async (
         },
       ]);
 
-    const component = new MessageActionRow().addComponents([question]);
+    const component = new ActionRowBuilder<SelectMenuBuilder>().addComponents([
+      question,
+    ]);
 
     const first = (await interaction.editReply({
       content: "Please complete this form to gain access to the server.",
@@ -96,16 +99,18 @@ export const question = async (
               ),
             5000
           );
-          const button = new MessageButton()
+          const button = new ButtonBuilder()
             .setLabel("Check out the Server Guide")
             .setURL(
               "https://discord.com/channels/1016433241978314913/1016433242628431934/1016573310462591028"
             )
-            .setStyle("LINK");
+            .setStyle(ButtonStyle.Link);
           await collected.reply({
             content:
               "For more info about the TE community, check out the <#1016433242628431934> channel",
-            components: [new MessageActionRow().addComponents(button)],
+            components: [
+              new ActionRowBuilder<ButtonBuilder>().addComponents(button),
+            ],
             ephemeral: true,
           });
         } else {
