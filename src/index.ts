@@ -30,6 +30,7 @@ import { loadCommands } from "./utils/loadCommands";
 import { registerCommands } from "./utils/registerCommands";
 import { validateEnv } from "./utils/validateEnv";
 import { handleEvents } from "./events";
+import { refreshRoles } from "./utils/refreshRoles";
 (async () => {
   try {
     const bot = new Client({
@@ -54,6 +55,9 @@ import { handleEvents } from "./events";
     } else {
       logHandler.log("error", "Failed to register bot commands.");
     }
+
+    // run weekly role-refresh
+    setInterval(async () => await refreshRoles(bot), 21600000);
   } catch (e) {
     const err = e as Error;
     logHandler.log("error", `${err.message}\n${err.stack}`);
