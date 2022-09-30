@@ -32,6 +32,7 @@ export const selfroleHandler: CommandHandler = async (bot, interaction) => {
     "1024985608092917801",
     "1024985671351422976",
   ];
+
   const member = interaction.member as GuildMember;
   if (!guild || !member) {
     await interaction.editReply("This command can only be used in the server.");
