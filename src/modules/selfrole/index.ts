@@ -36,6 +36,7 @@ export const selfroleHandler: CommandHandler = async (bot, interaction) => {
     "1047911820402380830",
     "1047911919576690709",
     "1047912032437026936",
+    "1067069348239396915"
   ];
 
   const member = interaction.member as GuildMember;
