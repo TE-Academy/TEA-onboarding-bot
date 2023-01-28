@@ -20,7 +20,9 @@ export const selfroleViewHandler: CommandHandler = async (bot, interaction) => {
       new EmbedBuilder()
         .setTitle("config selfrole view")
         .setDescription(
-          `The following roles are self-assignable:\n${selfAssignableRoles
+          `The following ${
+            selfAssignableRoles.length
+          } roles are self-assignable:\n${selfAssignableRoles
             .map((id) => `<@&${id}>`)
             .join(", ")}`
         ),
