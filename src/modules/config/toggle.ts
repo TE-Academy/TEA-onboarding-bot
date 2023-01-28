@@ -28,25 +28,22 @@ export const selfroleToggleHandler: CommandHandler = async (
 
   if (selfAssignableRoles.every((role) => role !== roleId)) {
     selfAssignableRoles.push(roleId as string);
-    await writeFile(
-      join(process.cwd(), "selfAssignableRoles.json"),
-      JSON.stringify(selfAssignableRoles),
-      "utf-8"
-    );
     await interaction.editReply(
       `The <@&${roleId}> role is self-assignable now.`
     );
-    return;
   } else {
-    selfAssignableRoles.splice(selfAssignableRoles.indexOf(roleId as string));
-    await writeFile(
-      join(process.cwd(), "selfAssignableRoles.json"),
-      JSON.stringify(selfAssignableRoles),
-      "utf-8"
+    selfAssignableRoles.splice(
+      selfAssignableRoles.indexOf(roleId as string),
+      1
     );
     await interaction.editReply(
       `The <@&${roleId}> role is not self-assignable now.`
     );
-    return;
   }
+  await writeFile(
+    join(process.cwd(), "selfAssignableRoles.json"),
+    JSON.stringify(selfAssignableRoles),
+    "utf-8"
+  );
+  return;
 };
