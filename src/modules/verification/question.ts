@@ -102,7 +102,7 @@ export const question = async (
           const button = new ButtonBuilder()
             .setLabel("Check out the Server Guide")
             .setURL(
-              "https://discord.com/channels/1016433241978314913/1016433242628431934/1016573310462591028"
+              "https://discord.com/channels/1016433241978314913/1016433242628431934/1068871584850395146"
             )
             .setStyle(ButtonStyle.Link);
           await collected.reply({
