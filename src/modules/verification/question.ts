@@ -29,7 +29,7 @@ import {
   Message,
   ButtonBuilder,
   ActionRowBuilder,
-  SelectMenuBuilder,
+  StringSelectMenuBuilder,
   ButtonStyle,
 } from "discord.js";
 
@@ -52,7 +52,7 @@ export const question = async (
       return;
     }
     const member = interaction.member as GuildMember;
-    const question = new SelectMenuBuilder()
+    const question = new StringSelectMenuBuilder()
       .setCustomId("channel-name")
       .setPlaceholder("Are you a bot?")
       .addOptions([
@@ -68,9 +68,8 @@ export const question = async (
         },
       ]);
 
-    const component = new ActionRowBuilder<SelectMenuBuilder>().addComponents([
-      question,
-    ]);
+    const component =
+      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents([question]);
 
     const first = (await interaction.editReply({
       content: "Please complete this form to gain access to the server.",
@@ -84,7 +83,7 @@ export const question = async (
     });
 
     collector.on("collect", async (collected) => {
-      if (collected.isSelectMenu()) {
+      if (collected.isStringSelectMenu()) {
         if (collected.values[0] === "no") {
           await interaction.editReply({
             content:

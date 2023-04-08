@@ -21,10 +21,9 @@
  *
  */
 
-import { Client } from "discord.js";
+import { Client, GatewayIntentBits } from "discord.js";
 import { Bot } from "./interfaces/Bot";
 import { logHandler } from "./utils/logHandler";
-import { GatewayIntentBits } from "discord.js";
 
 import { loadCommands } from "./utils/loadCommands";
 import { registerCommands } from "./utils/registerCommands";
